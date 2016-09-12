@@ -1,0 +1,63 @@
+<html>
+ <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Flot Examples</title>
+    <script language="javascript" type="text/javascript" src="jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
+ </head>
+    <body>
+    <h1>Flot Examples</h1>
+
+    <div id="placeholder" style="width:600px;height:300px;"></div>
+
+
+<script type="text/javascript">
+$(function () {
+    var options = {
+        lines: { show: true },
+        points: { show: true },
+        xaxis: { mode: "time",
+        timeformat: "%H:%M:%S" }
+    };
+    var data = [];
+    var placeholder = $("#placeholder");
+    
+    $.plot(placeholder, data, options);
+
+    
+    // fetch one series, adding to what we got
+    var alreadyFetched = {};
+    
+    $("input.fetchSeries").click(function () {
+        var button = $(this);
+        fetchData();
+    });
+    
+    function fetchData() {
+        function onDataReceived(series) {
+            // extract the first coordinate pair so you can see that
+            // data is now an ordinary Javascript object
+                var json = JSON.parse(series);
+            
+            // and plot all we got
+            $.plot(placeholder, json, options);
+         }
+        
+        $.ajax({
+            url: 'http://127.0.0.1:8080/labcamp/transactions/trends',
+            method: 'GET',
+            dataType: 'json',
+            success: onDataReceived
+        });
+    }
+    function update() {
+        fetchData()
+        setTimeout(update, 5000);
+    }
+
+    update();
+});
+</script>
+
+ </body>
+</html>
