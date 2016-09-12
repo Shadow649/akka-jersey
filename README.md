@@ -10,9 +10,9 @@ Key concepts
 
 Main Modules
 ------------
-* Financial the system used to process the transactions
-* Rest-Service contains the REST Endpoint
-* Transaction-generator used to test the application (Should be added proper IT)
+* Financial: the system used to process the transactions
+* Rest-Service: contains the REST Endpoint
+* Transaction-generator: used to test the application (Should be added proper IT)
 
 How to run the example
 ----------------------
